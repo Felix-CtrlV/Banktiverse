@@ -5,15 +5,12 @@ if (!isset($_SESSION['bank_user_id'])) header("Location: index.php");
 
 $user_id = $_SESSION['bank_user_id'];
 
-// Refresh User Data
 $q = mysqli_query($conn, "SELECT * FROM bank_users WHERE user_id = $user_id");
 $user = mysqli_fetch_assoc($q);
 $_SESSION['balance'] = $user['balance'];
 
-// Get Transactions
 $txns = mysqli_query($conn, "SELECT * FROM transactions WHERE user_id = $user_id ORDER BY created_at DESC LIMIT 5");
 
-// Format Card
 $card_display = chunk_split($user['card_number'] ?? '0000000000000000', 4, ' ');
 ?>
 <!DOCTYPE html>
